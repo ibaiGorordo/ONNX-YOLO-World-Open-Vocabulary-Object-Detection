@@ -4,7 +4,7 @@
 
 # Important
 - If you know what labels you are going to detect, use the official export method. This repository is just to show how a model can be exported with the ability to accept the class embeddings as input maintaining the open vocabulary feature in ONNX.
-- It is necessary to especify the number of classes when exporting the model. Setting a dynamic number of classes is not gives an error when running the model.
+- It is necessary to especify the number of classes when exporting the model. Setting a dynamic number of classes gives an error when running the model.
 - For classes that are not in the pretrained datasets (e.g. COCO, Objects365...), the score can be very low (less than 1%), try reducing the confidence threshold to detect them.
 
 # Requirements
@@ -31,7 +31,7 @@ Otherwise:
 
 # Class embeddings
 - The Google Colab notebook [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1lbVu_yA8GnWIbuU4STFvq0WS0p8bqTej?usp=sharing) also includes the class embeddings generation.
-- Otherwise, use the 'save_class_embeddings.py' script to generate the class embeddings. 
+- Otherwise, use the `save_class_embeddings.py` script to generate the class embeddings. 
 - The class embeddings can be obtained using Openai CLIP model. The embeddings are stored in the `.npz` format, and it also includes the list of classes.
 - The number of class embeddings in the `.npz` file does not need to match the number of classes in the model as long as you only pass the correct number of class embeddings to the model during inference.
 
@@ -53,6 +53,7 @@ python .\export_ultralytics_model.py --model_name yolov8l-worldv2.pt --num_class
  ```
 
  * **Gradio Image inference**:
+
 It showcases the model's ability to detect different classes during inference. The model is exported with one class embedding as input, but the class can be selected from the list includded in the class embeddings file.
  ```shell
  python gradio_image_selected_class_detection.py
