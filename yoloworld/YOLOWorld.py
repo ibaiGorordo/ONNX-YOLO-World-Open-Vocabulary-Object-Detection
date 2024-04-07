@@ -72,7 +72,7 @@ class YOLOWorld:
         scores = scores[scores > self.conf_threshold]
 
         if len(scores) == 0:
-            return [], [], []
+            return np.array([]), np.array([]), np.array([])
 
         # Get the class with the highest confidence
         class_ids = np.argmax(predictions[:, 4:], axis=1)
