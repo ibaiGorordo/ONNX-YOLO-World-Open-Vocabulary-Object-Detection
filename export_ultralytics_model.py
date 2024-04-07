@@ -28,7 +28,7 @@ def main():
     yoloModel.set_classes([""] * num_classes)
 
     # Initialize model exporter
-    export_model = ModelExporter(yoloModel, device)
+    export_model = ModelExporter(yoloModel.model, device)
 
     # Export model
     export_model.export(output_dir, model_name, img_width, img_height, num_classes)

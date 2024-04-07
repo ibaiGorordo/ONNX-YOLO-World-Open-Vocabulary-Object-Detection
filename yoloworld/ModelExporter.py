@@ -5,8 +5,7 @@ import torch
 class ModelExporter(torch.nn.Module):
     def __init__(self, yoloModel, device='cpu'):
         super(ModelExporter, self).__init__()
-        model = yoloModel.model
-        model = deepcopy(model).to(device)
+        model = deepcopy(yoloModel).to(device)
         for p in model.parameters():
             p.requires_grad = False
         model.eval()
@@ -26,13 +25,14 @@ class ModelExporter(torch.nn.Module):
         print(x.shape, txt_feats.shape)
 
         # Export model
-        output_path = f"{output_dir}/{model_name.replace('.pt', '.onnx')}"
+        onnx_name = model_name.replace('.pth', '.onnx').replace('.pt', '.onnx')
+        output_path = f"{output_dir}/{onnx_name}"
         with torch.no_grad():
             torch.onnx.export(self,
                               (x, txt_feats),
                               output_path,
                               do_constant_folding=True,
-                              opset_version=12,
+                              opset_version=17,
                               input_names=["images", "txt_feats"],
                               output_names=["output"])
 
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     from ultralytics import YOLOWorld
 
     # Initialize model
-    yoloModel = YOLOWorld("yolov8l-worldv2.pt")
+    yoloModel = YOLOWorld("../yolo_world_v2_l_obj365v1_goldg_cc3mlite_pretrain-ca93cd1f.pth")
     yoloModel.set_classes([""] * 1)
 
     # Initialize model exporter
