@@ -2,7 +2,7 @@ from argparse import ArgumentParser
 import torch
 from ultralytics import YOLOWorld
 
-from export import ModelExporter
+from yoloworld import ModelExporter
 
 
 def main():
